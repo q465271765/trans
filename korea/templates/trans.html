@@ -1,0 +1,51 @@
+{#{% extends "base.html" %}#}
+<script type="text/javascript" src="/trans/media/jslib/jquery.js"></script>
+{% block title %} 目标语言 {% endblock title %}
+<select id="target_lang">
+    {% for k,v in language.items %}
+    <option value ={{ k }}>{{ v }}</option>
+{% endfor %}
+</select>
+
+{% block content %}
+<div class="trans-left">
+
+</div>
+<div class="textarea-bg-text" id="textarea-bg-text"></div>
+<textarea class="textarea" id="baidu_translate_input"></textarea></br>
+翻译语言
+    <select id="trans_lang">
+    {% for k,v in language.items %}
+    <option value ={{ k }}>{{ v }}</option>
+{% endfor %}
+</select>
+<div class="trans-right">
+<textarea class="textarea" id="baidu_translate_output"></textarea>
+</div>
+    <button id="trans" class="trans">翻译</button>
+{% endblock content %}
+
+<script src="http://apps.bdimg.com/libs/jquery/1.11.1/jquery.min.js"></script>
+<script>
+    $("#trans").click(function(){
+        var data = {};
+           data.input = $('#baidu_translate_input').val();
+           data.target_lang = $('#target_lang').select().val();
+           data.trans_lang = $('#trans_lang').select().val();
+        alert(window.location)
+        $.ajax({
+            async:false,
+            url:window.location,
+            data:data,
+            type:'post',
+            success:function(trans){
+                alert(trans)
+	            $('#baidu_translate_output')[0].innerHTML=trans;
+	        },
+	        error:function(cdata){
+	                alert("服务器出错!");
+	            }
+        })
+      });
+
+</script>
